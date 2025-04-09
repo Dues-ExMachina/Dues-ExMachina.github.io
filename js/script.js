@@ -23,49 +23,34 @@ function formatSeconds(seconds) {
 
 async function getSongs(folder) {
 
-    currFolder = folder
-    let a = await fetch(`/${folder}/`)
-    let response = await a.text();
-    // console.log(response);  // logs the html code in console
-    let div = document.createElement("div")
-    div.innerHTML = response;
-    let as = div.getElementsByTagName("a")
-    // console.log(as);
+    async function getSongs(folder) {
+    currFolder = folder;
+    let res = await fetch(`${folder}/songs.json`);
+    let data = await res.json();
+    songs = data.songs;
 
-    songs = []
-    for (let index = 0; index < as.length; index++) {
-        const element = as[index];
-        if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split(`/${folder}/`)[1])
-        }
-    }
-    // console.log(songs);
-    //Getting song names from folder
+    // Now render the UI
     let songUl = document.querySelector(".songList").getElementsByTagName("ul")[0]
     songUl.innerHTML = ""
     for (const song of songs) {
-        songUl.innerHTML = songUl.innerHTML + `<li> <img src="img/music.svg" alt="music" class="invert">
-                            <div class="info">
-
-                                <div class="songName">${song.replaceAll("%20", " ")}</div>
-                                <div class="artist">Anubhab</div>
-                            </div>
-                            <div class="playNow">
-                                <span>Play</span>
-                                <img class="invert" src="img/play.svg" alt="PlayNow">
-                            </div>
-                        </li>`;
-
+        songUl.innerHTML += `<li> <img src="img/music.svg" alt="music" class="invert">
+            <div class="info">
+                <div class="songName">${song.replaceAll("%20", " ")}</div>
+                <div class="artist">Anubhab</div>
+            </div>
+            <div class="playNow">
+                <span>Play</span>
+                <img class="invert" src="img/play.svg" alt="PlayNow">
+            </div>
+        </li>`;
     }
 
-    //Attach a event listner to each song(Also selecting the song)
     Array.from(document.querySelector(".songList").getElementsByTagName("li")).forEach(e => {
         e.addEventListener("click", element => {
-            // console.log(e.querySelector(".info").firstElementChild.innerHTML)
-            playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());// there was a space comming in first to remove that used trim fn.
+            playMusic(e.querySelector(".info").firstElementChild.innerHTML.trim());
         });
-
     });
+
     return songs;
 }
 
