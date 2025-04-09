@@ -66,48 +66,36 @@ const playMusic = (track, pause = false) => {
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00"
 }
 async function displayAlbum() {
-    let a = await fetch("/songs/");
-    let response = await a.text();
-
-    let div = document.createElement("div");
-    div.innerHTML = response;
+    let res = await fetch("/songs/albums.json");
+    let albums = await res.json();
 
     let cardContainer = document.querySelector(".cardContainer");
-    let anchors = div.getElementsByTagName("a");
-    let anchorArray = Array.from(anchors);
 
-    for (let index = 0; index < anchorArray.length; index++) {
-        const e = anchorArray[index];
+    for (let folder of albums) {
+        try {
+            let res = await fetch(`/songs/${folder}/info.json`);
+            let metadata = await res.json();
 
-        if (e.href.includes("/songs")) {
-            let folder = e.href.split("/").splice(-2)[0];
-
-            try {
-               let res = await fetch(`/songs/${folder}/info.json`);
-
-                let metadata = await res.json();
-
-                // Add new card
-                cardContainer.innerHTML += `
-                    <div data-folder="${folder}" class="card">
-                        <div class="play">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path d="M5 20V4L19 12L5 20Z" stroke="#141B34" stroke-width="1.5"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                        <img src="/songs/${folder}/cover.jpg" alt="song">
-                        <h2>${metadata.title}</h2>
-                        <p>${metadata.description}</p>
-                    </div>`;
-            } catch (err) {
-                console.error(`Failed to fetch info for ${folder}`, err);
-            }
+            // Add new card
+            cardContainer.innerHTML += `
+                <div data-folder="${folder}" class="card">
+                    <div class="play">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path d="M5 20V4L19 12L5 20Z" stroke="#141B34" stroke-width="1.5"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <img src="/songs/${folder}/cover.jpg" alt="song">
+                    <h2>${metadata.title}</h2>
+                    <p>${metadata.description}</p>
+                </div>`;
+        } catch (err) {
+            console.error(`Failed to fetch info for ${folder}`, err);
         }
     }
 
-    // Add click listeners after cards are added to DOM
+    // Add click listeners
     document.querySelectorAll(".card").forEach(card => {
         card.addEventListener("click", async (item) => {
             let folder = item.currentTarget.dataset.folder;
