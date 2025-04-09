@@ -40,7 +40,7 @@ async function getSongs(folder) {
         }
     }
     // console.log(songs);
-    // Geting song names from folder
+    //Getting song names from folder
     let songUl = document.querySelector(".songList").getElementsByTagName("ul")[0]
     songUl.innerHTML = ""
     for (const song of songs) {
@@ -82,53 +82,6 @@ const playMusic = (track, pause = false) => {
     document.querySelector(".songinfo").innerHTML = decodeURI(track)
     document.querySelector(".songtime").innerHTML = "00:00 / 00:00"
 }
-//wrong code
-// async function displayAlbum() {
-//     let a = await fetch("http://127.0.0.1:8000/songs/")
-//     let response = await a.text();
-//     // console.log(response);  // logs the html code in console
-//     let div = document.createElement("div")
-//     let cardContainer = document.querySelector(".cardContainer")
-//     div.innerHTML = response;
-//     console.log(div)
-//     let anchors = div.getElementsByTagName("a")
-//     let array = Array.from(anchors)
-//     // .forEach(async e => {
-//         for (let index = 0; index < array.length; index++) {
-//             const e = array[index];
-
-//         }
-//         if (e.href.includes("/songs")) {
-//             let folder = (e.href.split("/").splice(-2)[0])
-//             //get meta data of the folder
-//             let a = await fetch(`http://127.0.0.1:8000/songs/${folder}/info.json`)
-//             let response = await a.json();
-//             console.log(response);
-//             //inputing new cards
-//             cardContainer.innerHTML = cardContainer.innerHTML + `<div data-folder="Amv" class="card">
-//                         <div class="play">
-//                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
-//                                 xmlns="http://www.w3.org/2000/svg">
-//                                 <path d="M5 20V4L19 12L5 20Z" stroke="#141B34" stroke-width="1.5"
-//                                     stroke-linejoin="round" />
-//                             </svg>
-//                         </div>
-//                         <img src="/songs/${folder}/cover.jpg" alt="song">
-//                         <h2>${response.title}</h2>
-//                         <p>${response.description}</p>
-//                     </div>`
-
-//         }
-//     }
-//     //Click on card to load new playlist
-//     Array.from(document.getElementsByClassName("card")).forEach(e => {
-//         e.addEventListener("click", async item => {
-//             songs = await getSongs(`/songs/${item.currentTarget.dataset.folder}`);
-
-//         })
-//     })
-// }
-//corrected code
 async function displayAlbum() {
     let a = await fetch("/songs/");
     let response = await a.text();
@@ -147,7 +100,8 @@ async function displayAlbum() {
             let folder = e.href.split("/").splice(-2)[0];
 
             try {
-                let res = await fetch(`http://127.0.0.1:8000/songs/${folder}/info.json`);
+               let res = await fetch(`/songs/${folder}/info.json`);
+
                 let metadata = await res.json();
 
                 // Add new card
