@@ -24,7 +24,7 @@ function formatSeconds(seconds) {
 async function getSongs(folder) {
 
     currFolder = folder
-    let a = await fetch(`http://127.0.0.1:8000/${folder}/`)
+    let a = await fetch(`/${folder}/`)
     let response = await a.text();
     // console.log(response);  // logs the html code in console
     let div = document.createElement("div")
@@ -130,7 +130,7 @@ const playMusic = (track, pause = false) => {
 // }
 //corrected code
 async function displayAlbum() {
-    let a = await fetch("http://127.0.0.1:8000/songs/");
+    let a = await fetch("/songs/");
     let response = await a.text();
 
     let div = document.createElement("div");
