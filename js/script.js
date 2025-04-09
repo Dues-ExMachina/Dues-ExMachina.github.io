@@ -21,8 +21,6 @@ function formatSeconds(seconds) {
 // });
 
 
-async function getSongs(folder) {
-
     async function getSongs(folder) {
     currFolder = folder;
     let res = await fetch(`${folder}/songs.json`);
