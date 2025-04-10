@@ -429,6 +429,18 @@ margin: 6px; */
     }
 }
 
+@media (max-width: 1023px) {
+    .card {
+        width: 16vw;
+        height: auto;
+    }
+
+    .songinfo,
+    .songtime {
+        width: 14rem;
+    }
+}
+
 @media (max-width: 425px) {
     .playbar {
         width: calc(100vw - 51px);
@@ -444,4 +456,64 @@ margin: 6px; */
         width: 18px;
     }
 
+    .timevol {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+    }
+
+    .songtime {
+        text-align: end;
+        width: 90px;
+    }
+
+    .musicControll {
+        display: flex;
+        justify-content: space-between;
+        color: #000000;
+        gap: 28px;
+    }
+
+    .card {
+        width: 19rem
+    }
+
+
+}
+
+@media (min-width: 1441px) {
+    .playbar {
+        width: calc(100vw - 740px);
+    }
+
+    .musicControll {
+        height: 5rem;
+        font-size: 2rem;
+    }
+
+    .songbuttons img {
+        cursor: pointer;
+        width: 3rem;
+    }
+
+    .songList ul {
+        height: 600px;
+    }
+
+    .songList ul li {
+        padding: 19px;
+    }
+
+    .songName {
+        font-size: 1.5rem;
+    }
+
+    .artist {
+        font-size: 1rem;
+    }
+
+    .right {
+        height: 98vh;
+    }
 }
