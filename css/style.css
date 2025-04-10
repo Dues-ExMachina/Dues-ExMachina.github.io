@@ -406,7 +406,7 @@
     }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 430px) {
     .playbar {
         width: calc(100vw - 51px);
         font-size: 12px;
