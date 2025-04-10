@@ -445,7 +445,8 @@ margin: 6px; */
     .playbar {
         width: calc(100vw - 51px);
         font-size: 12px;
-        justify-content: space-around
+        justify-content: space-around;
+        padding: 2em 1em;
     }
 
     .seekBar {
@@ -453,7 +454,7 @@ margin: 6px; */
     }
 
     .playbar img {
-        width: 18px;
+        width: 25px;
     }
 
     .timevol {
@@ -472,8 +473,9 @@ margin: 6px; */
         display: flex;
         justify-content: space-between;
         color: #000000;
-        gap: 28px;
+        gap: 29px;
     }
+
 
     .card {
         width: 19rem
